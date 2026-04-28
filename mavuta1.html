@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAVUTA — Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="mavuta1.css">
+</head>
+<body>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-header">
+    <span class="logo">Mavuta</span>
+    <button class="search-close" onclick="closeSearch()" aria-label="Close search">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="search-body">
+    <div class="search-input-wrap">
+      <input type="text" id="searchInput" placeholder="Search pieces, collections…" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()"/>
+      <button class="search-go" onclick="handleSearch(document.getElementById('searchInput').value)">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+    </div>
+    <div class="search-suggestions" id="searchSuggestions">
+      <h4>Popular searches</h4>
+      <div class="search-tags">
+        <button class="search-tag" onclick="quickSearch('Linen Dress')">Linen Dress</button>
+        <button class="search-tag" onclick="quickSearch('Blazer')">Blazer</button>
+        <button class="search-tag" onclick="quickSearch('New In')">New In</button>
+        <button class="search-tag" onclick="quickSearch('Lookbook')">Lookbook</button>
+        <button class="search-tag" onclick="quickSearch('Trousers')">Trousers</button>
+        <button class="search-tag" onclick="quickSearch('Accessories')">Accessories</button>
+        <button class="search-tag" onclick="quickSearch('SS 2025')">SS 2025</button>
+      </div>
+    </div>
+    <div class="search-results" id="searchResults">
+      <h4 id="searchResultsLabel">Results</h4>
+      <div class="search-result-grid" id="searchResultGrid"></div>
+    </div>
+  </div>
+</div>
+
+<header>
+  <!-- Top announcement bar -->
+  <div class="header-top-bar">
+    <a href="#">Store Locator</a>
+    <span>✦ Free shipping on orders over $200 — <span style="color:rgba(247,243,238,0.7)">Shop New In</span> ✦</span>
+    <a href="#">Help &amp; Contact</a>
+  </div>
+  <div class="header-main">
+    <nav>
+      <a class="logo" href="#" onclick="showPage('home')">Mavuta</a>
+      <ul class="nav-links">
+        <li><a href="#" onclick="showPage('collections')" id="nav-collections">Collections</a></li>
+        <li><a href="#" onclick="showPage('lookbook')" id="nav-lookbook">Lookbook</a></li>
+        <li><a href="#" onclick="showPage('newin')" id="nav-newin">New In</a></li>
+        <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <!-- Search -->
+        <button class="nav-icon-btn" onclick="openSearch()" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <!-- Wishlist -->
+        <button class="nav-icon-btn" aria-label="Wishlist">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <!-- Bag -->
+        <button class="nav-icon-btn" aria-label="Shopping bag">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </button>
+        <span class="bag-count">(0)</span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ════ HOME PAGE ════ -->
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-bg-img"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-number">SS</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Spring / Summer 2025</p>
+      <h1 class="hero-title">The <em>Art</em><br>of Silence</h1>
+      <p class="hero-sub">Clothing that speaks in textures, in silhouettes, in the quiet confidence of restraint.</p>
+      <button class="btn-primary" onclick="showPage('collections')">Explore the Collection</button>
+    </div>
+  </div>
+
+  <div class="home-marquee">
+    <div class="marquee-track">
+      <span class="marquee-item">Collections 2025 <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Handcrafted in Kigali <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">New Lookbook Available <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Free Shipping Over $200 <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Collections 2025 <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Handcrafted in Kigali <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">New Lookbook Available <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Free Shipping Over $200 <span class="marquee-dot">✦</span></span>
+    </div>
+  </div>
+
+  <div class="home-featured">
+    <div class="home-featured-inner">
+      <div class="feat-card">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="The Linen Edit" loading="lazy"/></div>
+          <div hidden><svg width="120" height="280" viewBox="0 0 120 280" fill="none">
+            <ellipse cx="60" cy="36" rx="22" ry="24" fill="rgba(201,185,154,0.15)"/>
+            <path d="M32 80 Q60 70 88 80 L100 200 Q60 210 20 200Z" fill="rgba(201,185,154,0.1)" stroke="rgba(201,185,154,0.2)" stroke-width="1"/>
+            <path d="M88 80 L115 160" stroke="rgba(201,185,154,0.2)" stroke-width="1"/>
+            <path d="M32 80 L5 160" stroke="rgba(201,185,154,0.2)" stroke-width="1"/>
+            <path d="M40 200 L35 275 M80 200 L85 275" stroke="rgba(201,185,154,0.2)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-label">
+          <div class="eyebrow">New Arrival</div>
+          <h3>The Linen Edit</h3>
+          <p>Breathable luxury for warm days</p>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Terracotta Dusk" loading="lazy"/></div>
+          <div hidden><svg width="100" height="260" viewBox="0 0 100 260" fill="none">
+            <ellipse cx="50" cy="32" rx="20" ry="22" fill="rgba(155,91,58,0.2)"/>
+            <path d="M24 72 Q50 62 76 72 L84 180 Q50 192 16 180Z" fill="rgba(155,91,58,0.15)" stroke="rgba(155,91,58,0.25)" stroke-width="1"/>
+            <path d="M36 180 L32 258 M64 180 L68 258" stroke="rgba(155,91,58,0.25)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-label">
+          <div class="eyebrow">Lookbook 2025</div>
+          <h3>Terracotta Dusk</h3>
+          <p>Warm earth tones, evening silhouettes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ COLLECTIONS PAGE ════ -->
+<section id="collections" class="page">
+  <div class="section-header animate-up">
+    <h2>Our<br><span>Collections</span></h2>
+    <p>Each collection is a chapter — composed from texture, form, and the stories between them.</p>
+  </div>
+
+  <div class="collections-grid">
+
+    <div class="collection-card">
+      <div class="card-inner">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&q=80" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(.4,0,.2,1)" alt="Art of Silence collection" loading="lazy"/></div>
+          <div hidden><svg width="200" height="240" viewBox="0 0 200 240" fill="none">
+            <ellipse cx="100" cy="48" rx="34" ry="38" fill="rgba(201,185,154,0.12)"/>
+            <path d="M50 110 Q100 95 150 110 L165 220 Q100 235 35 220Z" fill="rgba(201,185,154,0.08)" stroke="rgba(201,185,154,0.18)" stroke-width="1"/>
+            <path d="M150 110 L185 190" stroke="rgba(201,185,154,0.15)" stroke-width="1"/>
+            <path d="M50 110 L15 190" stroke="rgba(201,185,154,0.15)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-label">
+          <div class="eyebrow">SS 2025 — Main Collection</div>
+          <h3>The Art of Silence</h3>
+          <p>48 pieces · Linen, silk, raw cotton</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collection-card">
+      <div class="card-inner">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?w=700&q=80" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(.4,0,.2,1)" alt="Monochrome collection" loading="lazy"/></div>
+          <div hidden><svg width="100" height="200" viewBox="0 0 100 200" fill="none">
+            <ellipse cx="50" cy="30" rx="18" ry="20" fill="rgba(138,129,120,0.15)"/>
+            <path d="M22 68 Q50 58 78 68 L85 180 Q50 192 15 180Z" fill="rgba(138,129,120,0.1)" stroke="rgba(138,129,120,0.2)" stroke-width="1"/>
+            <line x1="34" y1="180" x2="30" y2="200" stroke="rgba(138,129,120,0.2)" stroke-width="1"/>
+            <line x1="66" y1="180" x2="70" y2="200" stroke="rgba(138,129,120,0.2)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-label">
+          <div class="eyebrow">Resort 2025</div>
+          <h3>Monochrome</h3>
+          <p>Shades of stone</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collection-card">
+      <div class="card-inner">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(.4,0,.2,1)" alt="Terracotta Dusk collection" loading="lazy"/></div>
+          <div hidden><svg width="110" height="220" viewBox="0 0 110 220" fill="none">
+            <ellipse cx="55" cy="34" rx="20" ry="22" fill="rgba(155,91,58,0.18)"/>
+            <path d="M25 78 Q55 65 85 78 L94 198 Q55 212 16 198Z" fill="rgba(155,91,58,0.12)" stroke="rgba(155,91,58,0.22)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-label">
+          <div class="eyebrow">AW 2024</div>
+          <h3>Terracotta Dusk</h3>
+          <p>Warm earth tones</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collection-card">
+      <div class="card-inner">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=700&q=80" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(.4,0,.2,1)" alt="Night Garden collection" loading="lazy"/></div>
+          <div hidden><svg width="110" height="220" viewBox="0 0 110 220" fill="none">
+            <ellipse cx="55" cy="32" rx="19" ry="21" fill="rgba(201,185,154,0.1)"/>
+            <path d="M10 90 L55 60 L100 90 L90 200 Q55 215 20 200Z" fill="rgba(201,185,154,0.07)" stroke="rgba(201,185,154,0.15)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-label">
+          <div class="eyebrow">Limited Edition</div>
+          <h3>Night Garden</h3>
+          <p>Embroidered eveningwear</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collection-card">
+      <div class="card-inner">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=700&q=80" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(.4,0,.2,1)" alt="Quiet Luxury collection" loading="lazy"/></div>
+          <div hidden><svg width="100" height="200" viewBox="0 0 100 200" fill="none">
+            <ellipse cx="50" cy="28" rx="17" ry="19" fill="rgba(42,46,40,0.4)"/>
+            <path d="M20 65 Q50 52 80 65 L88 188 Q50 202 12 188Z" fill="rgba(42,46,40,0.3)" stroke="rgba(201,185,154,0.15)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-label">
+          <div class="eyebrow">Essentials</div>
+          <h3>Quiet Luxury</h3>
+          <p>Year-round wardrobe</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════ LOOKBOOK PAGE ════ -->
+<section id="lookbook" class="page">
+  <div class="lookbook-intro">
+    <div>
+      <h2>Spring<br>Summer<br><em>2025</em></h2>
+    </div>
+    <div>
+      <p style="font-size:13px;line-height:2;color:var(--warm-gray);margin-bottom:28px;">Shot across the highlands of East Africa, this lookbook is a meditation on stillness. Each image captures the quiet dialogue between garment and landscape — how fabric moves, breathes, and belongs.</p>
+      <p style="font-size:13px;line-height:2;color:var(--warm-gray);">Photography by Amara Diallo. Styling by the Mavuta Studio Team. Directed by Ngabo Bruno.</p>
+      <div style="margin-top:40px;padding-top:28px;border-top:0.5px solid var(--border);display:flex;gap:40px;">
+        <div><span style="font-family:var(--font-serif);font-size:36px;font-weight:300;display:block">48</span><span style="font-size:10px;letter-spacing:0.2em;color:var(--warm-gray);text-transform:uppercase">Looks</span></div>
+        <div><span style="font-family:var(--font-serif);font-size:36px;font-weight:300;display:block">6</span><span style="font-size:10px;letter-spacing:0.2em;color:var(--warm-gray);text-transform:uppercase">Locations</span></div>
+        <div><span style="font-family:var(--font-serif);font-size:36px;font-weight:300;display:block">1</span><span style="font-size:10px;letter-spacing:0.2em;color:var(--warm-gray);text-transform:uppercase">Vision</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lookbook-gallery">
+    <div class="look"><div class="card-img" style="overflow:hidden;height:100%"><img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=900&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Look 01" loading="lazy"/></div><div hidden><svg viewBox="0 0 160 340" fill="none"><ellipse cx="80" cy="56" rx="28" ry="32" fill="rgba(201,185,154,0.12)"/><path d="M40 128 Q80 112 120 128 L132 310 Q80 326 28 310Z" fill="rgba(201,185,154,0.08)" stroke="rgba(201,185,154,0.15)" stroke-width="1"/></svg></div><span class="look-num">Look 01</span></div>
+    <div class="look"><div class="card-img" style="overflow:hidden;height:100%"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Look 02" loading="lazy"/></div><div hidden><svg viewBox="0 0 120 260" fill="none"><ellipse cx="60" cy="40" rx="22" ry="25" fill="rgba(155,91,58,0.15)"/><path d="M28 96 Q60 82 92 96 L102 238 Q60 252 18 238Z" fill="rgba(155,91,58,0.1)" stroke="rgba(155,91,58,0.2)" stroke-width="1"/></svg></div><span class="look-num">Look 02</span></div>
+    <div class="look"><div class="card-img" style="overflow:hidden;height:100%"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Look 03" loading="lazy"/></div><div hidden><svg viewBox="0 0 90 200" fill="none"><ellipse cx="45" cy="28" rx="16" ry="18" fill="rgba(138,129,120,0.15)"/><path d="M18 64 Q45 52 72 64 L80 182 Q45 195 10 182Z" fill="rgba(138,129,120,0.1)" stroke="rgba(138,129,120,0.2)" stroke-width="1"/></svg></div><span class="look-num">Look 03</span></div>
+    <div class="look"><div class="card-img" style="overflow:hidden;height:100%"><img src="https://images.unsplash.com/photo-1568252542512-9fe8fe9c87bb?w=800&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Look 04" loading="lazy"/></div><div hidden><svg viewBox="0 0 120 260" fill="none"><ellipse cx="60" cy="42" rx="22" ry="24" fill="rgba(201,185,154,0.1)"/><path d="M20 100 Q60 85 100 100 L108 238 Q60 252 12 238Z" fill="rgba(201,185,154,0.07)" stroke="rgba(201,185,154,0.12)" stroke-width="1"/></svg></div><span class="look-num">Look 04</span></div>
+    <div class="look"><div class="card-img" style="overflow:hidden;height:100%"><img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=700&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Look 05" loading="lazy"/></div><div hidden><svg viewBox="0 0 90 200" fill="none"><ellipse cx="45" cy="26" rx="15" ry="17" fill="rgba(42,46,40,0.3)"/><path d="M15 60 Q45 48 75 60 L82 180 Q45 193 8 180Z" fill="rgba(42,46,40,0.2)" stroke="rgba(201,185,154,0.12)" stroke-width="1"/></svg></div><span class="look-num">Look 05</span></div>
+    <div class="look"><div class="card-img" style="overflow:hidden;height:100%"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Look 06" loading="lazy"/></div><div hidden><svg viewBox="0 0 150 300" fill="none"><ellipse cx="75" cy="50" rx="25" ry="28" fill="rgba(201,185,154,0.12)"/><path d="M35 114 Q75 98 115 114 L124 276 Q75 290 26 276Z" fill="rgba(201,185,154,0.08)" stroke="rgba(201,185,154,0.14)" stroke-width="1"/></svg></div><span class="look-num">Look 06</span></div>
+  </div>
+</section>
+
+<!-- ════ NEW IN PAGE ════ -->
+<section id="newin" class="page">
+  <div class="newin-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-bg-img"></div>
+    <div class="hero-grid"></div>
+    <div class="newin-hero-content">
+      <h1>New <span>In</span></h1>
+      <p>Fresh arrivals · Updated weekly</p>
+    </div>
+  </div>
+
+  <div class="newin-filters">
+    <button class="filter-btn active" onclick="setFilter(this,'all')">All</button>
+    <button class="filter-btn" onclick="setFilter(this,'dresses')">Dresses</button>
+    <button class="filter-btn" onclick="setFilter(this,'tops')">Tops</button>
+    <button class="filter-btn" onclick="setFilter(this,'trousers')">Trousers</button>
+    <button class="filter-btn" onclick="setFilter(this,'outerwear')">Outerwear</button>
+    <button class="filter-btn" onclick="setFilter(this,'accessories')">Accessories</button>
+  </div>
+
+  <div class="newin-grid">
+
+    <div class="product-card" data-cat="dresses">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Bias Cut Midi Dress" loading="lazy"/></div><div hidden><svg"/><path d="M15 50 Q40 40 65 50 L72 165 Q40 175 8 165Z" fill="rgba(201,185,154,0.1)" stroke="rgba(201,185,154,0.18)" stroke-width="1"/></svg></div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+        <span class="badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="category">Dresses</div>
+        <h4>Bias Cut Midi Dress</h4>
+        <div class="price">$285</div>
+      </div>
+    </div>
+
+    <div class="product-card" data-cat="tops">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Linen Overshirt" loading="lazy"/></div><div hidden><svg viewBox="0 0 80 160" fill="none"><ellipse cx="40" cy="22" rx="13" ry="14" fill="rgba(138,129,120,0.15)"/><path d="M10 50 Q40 38 70 50 L74 130 Q40 140 6 130Z" fill="rgba(138,129,120,0.1)" stroke="rgba(138,129,120,0.18)" stroke-width="1"/><path d="M70 50 L80 90" stroke="rgba(138,129,120,0.18)" stroke-width="1"/><path d="M10 50 L0 90" stroke="rgba(138,129,120,0.18)" stroke-width="1"/></svg></div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+        <span class="badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="category">Tops</div>
+        <h4>Linen Overshirt</h4>
+        <div class="price">$165</div>
+      </div>
+    </div>
+
+    <div class="product-card" data-cat="trousers">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Wide Leg Trousers" loading="lazy"/></div><div hidden><svg"/><path d="M15 52 Q40 42 65 52 L68 108 Q40 114 12 108Z" fill="rgba(201,185,154,0.07)" stroke="rgba(201,185,154,0.14)" stroke-width="1"/><path d="M15 108 L10 178 M65 108 L70 178" stroke="rgba(201,185,154,0.14)" stroke-width="1"/></svg></div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+      </div>
+      <div class="product-info">
+        <div class="category">Trousers</div>
+        <h4>Wide Leg Trousers</h4>
+        <div class="price">$220</div>
+      </div>
+    </div>
+
+    <div class="product-card" data-cat="outerwear">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Structured Blazer" loading="lazy"/></div><div hidden><svg"/><path d="M8 52 Q40 40 72 52 L78 168 Q40 178 2 168Z" fill="rgba(155,91,58,0.12)" stroke="rgba(155,91,58,0.2)" stroke-width="1"/><path d="M72 52 L80 130" stroke="rgba(155,91,58,0.2)" stroke-width="1"/><path d="M8 52 L0 130" stroke="rgba(155,91,58,0.2)" stroke-width="1"/></svg></div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+        <span class="badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="category">Outerwear</div>
+        <h4>Structured Blazer</h4>
+        <div class="price">$380</div>
+      </div>
+    </div>
+
+    <div class="product-card" data-cat="dresses">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Column Maxi Dress" loading="lazy"/></div><div hidden><svg fill="rgba(42,46,40,0.35)"/><path d="M12 50 Q40 38 68 50 L74 168 Q40 178 6 168Z" fill="rgba(42,46,40,0.25)" stroke="rgba(201,185,154,0.12)" stroke-width="1"/></svg></div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+      </div>
+      <div class="product-info">
+        <div class="category">Dresses</div>
+        <h4>Column Maxi Dress</h4>
+        <div class="price">$310</div>
+      </div>
+    </div>
+
+    <div class="product-card" data-cat="accessories">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Woven Leather Tote" loading="lazy"/></div>
+          <div hidden><svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+            <rect x="10" y="30" width="100" height="40" rx="6" fill="rgba(201,185,154,0.12)" stroke="rgba(201,185,154,0.2)" stroke-width="1"/>
+            <path d="M35 30 Q35 10 60 10 Q85 10 85 30" stroke="rgba(201,185,154,0.2)" stroke-width="1.5" fill="none"/>
+            <circle cx="42" cy="50" r="6" fill="rgba(201,185,154,0.2)" stroke="rgba(201,185,154,0.3)" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+        <span class="badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="category">Accessories</div>
+        <h4>Woven Leather Tote</h4>
+        <div class="price">$195</div>
+      </div>
+    </div>
+
+    <div class="product-card" data-cat="tops">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Drape Knit Blouse" loading="lazy"/></div><div hidden><svg viewBox="0 0 80 150" fill="none"><ellipse cx="40" cy="20" rx="13" ry="14" fill="rgba(155,91,58,0.15)"/><path d="M14 48 Q40 36 66 48 L70 128 Q40 138 10 128Z" fill="rgba(155,91,58,0.1)" stroke="rgba(155,91,58,0.18)" stroke-width="1"/><path d="M66 48 L78 90" stroke="rgba(155,91,58,0.18)" stroke-width="1"/><path d="M14 48 L2 90" stroke="rgba(155,91,58,0.18)" stroke-width="1"/></svg></div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+      </div>
+      <div class="product-info">
+        <div class="category">Tops</div>
+        <h4>Drape Knit Blouse</h4>
+        <div class="price">$140</div>
+      </div>
+    </div>
+
+    <div class="product-card" data-cat="trousers">
+      <div class="thumb">
+        <div class="card-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Cropped Tailored Pants" loading="lazy"/></div><div hidden><svg fill="rgba(138,129,120,0.12)"/><path d="M16 48 Q40 36 64 48 L66 100 Q40 108 14 100Z" fill="rgba(138,129,120,0.08)" stroke="rgba(138,129,120,0.15)" stroke-width="1"/><path d="M16 100 L12 178 M64 100 L68 178" stroke="rgba(138,129,120,0.15)" stroke-width="1"/></svg></div>
+        <div class="overlay"><button class="quick-add">Quick Add</button></div>
+        <span class="badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="category">Trousers</div>
+        <h4>Cropped Tailored Pants</h4>
+        <div class="price">$198</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════ ABOUT PAGE ════ -->
+<section id="about" class="page">
+  <div class="about-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-bg-img"></div>
+    <div class="hero-grid"></div>
+    <div class="about-hero-content">
+      <h1>Dressed in <em>Intention</em></h1>
+      <p>Mavuta was born from a simple belief: that clothing should feel like a second skin — considered, quiet, and entirely yours.</p>
+    </div>
+  </div>
+
+  <div class="about-story">
+    <div class="side-label">Our Story</div>
+    <div class="story-text">
+      <h2>From Kigali, to the World</h2>
+      <p>Mavuta began in 2019 as a small atelier in Kigali, Rwanda — a studio where patterns were cut by hand and every stitch carried the intention of its maker. Founded by Ngabo Bruno, the brand emerged from a desire to create fashion that honored both craft and the modern woman.</p>
+      <p>The name Mavuta — drawn from the Kinyarwanda word for grace — became the north star. Not the flashy kind of grace, but the deeper kind. The kind you feel when a garment moves with you, speaks for you without saying a word.</p>
+      <p>Today, Mavuta designs are worn across East Africa and beyond. The studio still operates from its original space in Kigali, a light-filled room where new ideas begin the same way they always have — with fabric, scissors, and quiet focus.</p>
+    </div>
+  </div>
+
+  <div class="about-values">
+    <div class="about-values-inner">
+      <h2>What We Stand For</h2>
+      <div class="values-grid">
+        <div class="value-item">
+          <div class="value-num">01</div>
+          <h3>Craft First</h3>
+          <p>Every garment is cut and finished in our Kigali atelier. We slow down so the work can be done right.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-num">02</div>
+          <h3>Material Honesty</h3>
+          <p>We use natural fibres — linen, silk, cotton — sourced from ethical suppliers across the continent.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-num">03</div>
+          <h3>Quiet Identity</h3>
+          <p>Our clothes carry no loud logos. The design is the signature. The fit is the statement.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-num">04</div>
+          <h3>Rooted in Africa</h3>
+          <p>Our aesthetic is shaped by the landscapes, textures, and light of East Africa — not imported from elsewhere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-team">
+    <h2>The Studio</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="card-img team-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" alt="Ngabo Bruno" loading="lazy"/></div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none">
+            <ellipse cx="50" cy="38" rx="20" ry="22" fill="rgba(155,91,58,0.2)"/>
+            <path d="M20 86 Q50 72 80 86 L88 200 Q50 214 12 200Z" fill="rgba(155,91,58,0.15)" stroke="rgba(155,91,58,0.25)" stroke-width="1"/>
+            <path d="M80 86 L95 155" stroke="rgba(155,91,58,0.2)" stroke-width="1"/>
+            <path d="M20 86 L5 155" stroke="rgba(155,91,58,0.2)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="team-info">
+          <h4>Ngabo Bruno</h4>
+          <p>Founder & Creative Director</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="card-img team-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" alt="Amara Diallo" loading="lazy"/></div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none">
+            <ellipse cx="50" cy="36" rx="19" ry="21" fill="rgba(201,185,154,0.15)"/>
+            <path d="M18 82 Q50 68 82 82 L90 200 Q50 215 10 200Z" fill="rgba(201,185,154,0.1)" stroke="rgba(201,185,154,0.2)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="team-info">
+          <h4>Amara Diallo</h4>
+          <p>Head of Photography</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="card-img team-img" style="overflow:hidden"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" alt="Claire Uwera" loading="lazy"/></div>
+          <svg width="100" height="220" viewBox="0 0 100 220" fill="none">
+            <ellipse cx="50" cy="36" rx="18" ry="20" fill="rgba(138,129,120,0.15)"/>
+            <path d="M20 80 Q50 66 80 80 L88 200 Q50 214 12 200Z" fill="rgba(138,129,120,0.1)" stroke="rgba(138,129,120,0.2)" stroke-width="1"/>
+            <path d="M80 80 L94 148" stroke="rgba(138,129,120,0.18)" stroke-width="1"/>
+            <path d="M20 80 L6 148" stroke="rgba(138,129,120,0.18)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="team-info">
+          <h4>Claire Uwera</h4>
+          <p>Lead Stylist</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+
+  <!-- Newsletter strip -->
+  <div class="footer-newsletter">
+    <div class="footer-newsletter-inner">
+      <div>
+        <h3>Stay in the <em>conversation</em></h3>
+        <p>New collections, lookbook releases, and stories from the atelier — delivered quietly to your inbox.</p>
+      </div>
+      <div>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your email address" id="newsletterEmail"/>
+          <button onclick="subscribeNewsletter()">Subscribe →</button>
+        </div>
+        <p style="font-size:10px;color:rgba(247,243,238,0.2);margin-top:12px;letter-spacing:0.08em;">By subscribing you agree to our Privacy Policy. Unsubscribe at any time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-inner">
+
+    <!-- Main footer links -->
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo" onclick="showPage('home')" style="cursor:pointer">Mavuta</span>
+        <p>A fashion atelier rooted in Kigali, Rwanda. Crafting clothing with intention, texture, and silence since 2019.</p>
+        <div class="footer-socials">
+          <button class="social-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </button>
+          <button class="social-btn" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.03-2.83.19-.77 1.27-5.38 1.27-5.38s-.32-.65-.32-1.61c0-1.51.88-2.63 1.97-2.63.93 0 1.38.7 1.38 1.54 0 .94-.6 2.34-.91 3.64-.26 1.09.54 1.97 1.61 1.97 1.93 0 3.23-2.47 3.23-5.39 0-2.23-1.51-3.79-3.67-3.79-2.5 0-3.97 1.88-3.97 3.82 0 .76.29 1.57.65 2.01.07.09.08.17.06.26l-.24.99c-.04.16-.13.19-.29.11-1.07-.5-1.74-2.06-1.74-3.32 0-2.7 1.96-5.18 5.65-5.18 2.97 0 5.27 2.11 5.27 4.94 0 2.95-1.86 5.32-4.44 5.32-.87 0-1.68-.45-1.96-0.98l-.53 1.99c-.19.74-.71 1.66-1.06 2.22.8.25 1.65.38 2.53.38 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+          </button>
+          <button class="social-btn" aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg>
+          </button>
+          <button class="social-btn" aria-label="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a onclick="showPage('collections')"><span>Collections</span><span class="arrow">→</span></a></li>
+          <li><a onclick="showPage('newin')"><span>New In</span><span class="arrow">→</span></a></li>
+          <li><a onclick="showPage('lookbook')"><span>Lookbook</span><span class="arrow">→</span></a></li>
+          <li><a><span>Sale</span><span class="arrow">→</span></a></li>
+          <li><a><span>Gift Cards</span><span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Help</h5>
+        <ul>
+          <li><a><span>Size Guide</span><span class="arrow">→</span></a></li>
+          <li><a><span>Shipping &amp; Returns</span><span class="arrow">→</span></a></li>
+          <li><a><span>Care Instructions</span><span class="arrow">→</span></a></li>
+          <li><a><span>Track My Order</span><span class="arrow">→</span></a></li>
+          <li><a><span>Contact Us</span><span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Studio</h5>
+        <ul>
+          <li><a onclick="showPage('about')"><span>Our Story</span><span class="arrow">→</span></a></li>
+          <li><a><span>Sustainability</span><span class="arrow">→</span></a></li>
+          <li><a><span>Careers</span><span class="arrow">→</span></a></li>
+          <li><a><span>Press</span><span class="arrow">→</span></a></li>
+          <li><a><span>Stockists</span><span class="arrow">→</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Trust badges row -->
+    <div class="footer-mid">
+      <div class="footer-trust">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="trust-text">
+          <h6>Free Shipping</h6>
+          <p>On all orders over $200</p>
+        </div>
+      </div>
+      <div class="footer-trust">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </div>
+        <div class="trust-text">
+          <h6>Easy Returns</h6>
+          <p>30-day hassle-free returns</p>
+        </div>
+      </div>
+      <div class="footer-trust">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="trust-text">
+          <h6>Secure Checkout</h6>
+          <p>SSL encrypted payments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <p>© 2025 Mavuta. All rights reserved.</p>
+        <div class="footer-legal">
+          <a>Privacy Policy</a>
+          <a>Terms of Use</a>
+          <a>Cookie Settings</a>
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <span>We accept</span>
+        <span class="payment-badge">Visa</span>
+        <span class="payment-badge">Mastercard</span>
+        <span class="payment-badge">PayPal</span>
+        <span class="payment-badge">MTN MoMo</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const page = document.getElementById(id);
+    if (page) { page.classList.add('active'); window.scrollTo(0,0); }
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+  }
+
+  function setFilter(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat === cat) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // ── SEARCH ──
+  const PRODUCTS = [
+    { name: 'Bias Cut Midi Dress', price: '$285', cat: 'Dresses', img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&q=70', page: 'newin' },
+    { name: 'Linen Overshirt', price: '$165', cat: 'Tops', img: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=300&q=70', page: 'newin' },
+    { name: 'Wide Leg Trousers', price: '$220', cat: 'Trousers', img: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=300&q=70', page: 'newin' },
+    { name: 'Structured Blazer', price: '$380', cat: 'Outerwear', img: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=70', page: 'newin' },
+    { name: 'Column Maxi Dress', price: '$310', cat: 'Dresses', img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=300&q=70', page: 'newin' },
+    { name: 'Woven Leather Tote', price: '$195', cat: 'Accessories', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&q=70', page: 'newin' },
+    { name: 'Drape Knit Blouse', price: '$140', cat: 'Tops', img: 'https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?w=300&q=70', page: 'newin' },
+    { name: 'Cropped Tailored Pants', price: '$198', cat: 'Trousers', img: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&q=70', page: 'newin' },
+    { name: 'The Art of Silence', price: 'SS 2025', cat: 'Collection', img: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=70', page: 'collections' },
+    { name: 'Monochrome Collection', price: 'Resort 2025', cat: 'Collection', img: 'https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?w=300&q=70', page: 'collections' },
+    { name: 'Terracotta Dusk', price: 'AW 2024', cat: 'Collection', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=70', page: 'collections' },
+    { name: 'Lookbook SS 2025', price: '48 Looks', cat: 'Lookbook', img: 'https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=300&q=70', page: 'lookbook' },
+  ];
+
+  function openSearch() {
+    document.getElementById('searchOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('searchInput').focus(), 200);
+  }
+
+  function closeSearch() {
+    document.getElementById('searchOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchResults').classList.remove('has-results');
+    document.getElementById('searchSuggestions').style.display = '';
+  }
+
+  function quickSearch(term) {
+    document.getElementById('searchInput').value = term;
+    handleSearch(term);
+  }
+
+  function handleSearch(query) {
+    const q = query.trim().toLowerCase();
+    const suggestions = document.getElementById('searchSuggestions');
+    const results = document.getElementById('searchResults');
+    const grid = document.getElementById('searchResultGrid');
+    const label = document.getElementById('searchResultsLabel');
+    if (!q) {
+      results.classList.remove('has-results');
+      suggestions.style.display = '';
+      return;
+    }
+    suggestions.style.display = 'none';
+    const filtered = PRODUCTS.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.cat.toLowerCase().includes(q) ||
+      p.price.toLowerCase().includes(q)
+    );
+    if (filtered.length === 0) {
+      label.textContent = 'No results for "' + query + '"';
+      grid.innerHTML = '<p style="font-size:13px;color:var(--warm-gray);grid-column:span 4;padding:8px 0;">Try searching for dresses, blazer, linen, or new in.</p>';
+    } else {
+      label.textContent = filtered.length + ' result' + (filtered.length > 1 ? 's' : '') + ' for "' + query + '"';
+      grid.innerHTML = filtered.map(p => `
+        <div class="search-result-item" onclick="closeSearch();showPage('${p.page}')">
+          <div class="search-result-img">
+            <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+          </div>
+          <div class="search-result-name">${p.name}</div>
+          <div class="search-result-price">${p.cat} · ${p.price}</div>
+        </div>`).join('');
+    }
+    results.classList.add('has-results');
+  }
+
+  // Keyboard shortcut: / or Cmd+K opens search
+  document.addEventListener('keydown', e => {
+    if ((e.key === '/' || (e.metaKey && e.key === 'k')) && !document.getElementById('searchOverlay').classList.contains('open')) {
+      e.preventDefault(); openSearch();
+    }
+    if (e.key === 'Escape') closeSearch();
+  });
+
+  // Newsletter
+  function subscribeNewsletter() {
+    const email = document.getElementById('newsletterEmail').value.trim();
+    if (!email || !email.includes('@')) return;
+    document.getElementById('newsletterEmail').value = '';
+    document.getElementById('newsletterEmail').placeholder = 'Thank you for subscribing ✦';
+  }
+</script>
+</body>
+</html>
